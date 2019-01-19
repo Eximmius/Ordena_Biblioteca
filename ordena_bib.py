@@ -1,7 +1,6 @@
 # Ordenação de Livros
 # Autor: Ian Schmiegelow Dannapel
 # 19/01/2019
-# Testado - OK
 
 import operator
 import csv
@@ -50,11 +49,7 @@ class Library:
         # attr -> Ordered List of preferential attributes
         # rev -> List if reverse=True/False for attr
 
-        error_sort = False
-        if len(attr) < 1:
-            error_sort = True
-            return error_sort
-
+        error_sort = True
         attr.reverse()
         rev.reverse()
         i = 0
@@ -64,7 +59,8 @@ class Library:
                 self.books.sort(key=operator.attrgetter(
                     attribute), reverse=rev[i])
                 i += 1
-            except AttributeError:
+                error_sort = False
+            except Exception:
                 error_sort = True
                 break
         return error_sort
@@ -88,8 +84,10 @@ with open('ordena_bib.config', 'r') as f:
                 num, attribute, reverse = line.split(',')
                 attr.append(attribute.strip())
                 rev.append(reverse.strip() == 'desc')
-            except ValueError:
+                error_config = False
+            except Exception:
                 error_config = True
+                break
     print('Configurações lidas')
 
 error_sort = True
@@ -105,7 +103,7 @@ with open('book_sorted.csv', 'w') as csv_f:
                 [book.number, book.title, book.author, book.year])
         print('Ordenação realizada com sucesso, verifique arquivo')
     elif error_config:
-        print('Order Exception')
-        csv_writer.writerow(['Order Exception'])
+        print('Ordering Exception')
+        csv_writer.writerow(['Ordering Exception'])
     else:
         print('Nenhuma ordenação realizada')
