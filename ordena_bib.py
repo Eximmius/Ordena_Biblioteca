@@ -1,5 +1,7 @@
 # Ordenação de Livros
-# 18/01/2019
+# Autor: Ian Schmiegelow Dannapel
+# 19/01/2019
+# Testado - OK
 
 import operator
 import csv
@@ -74,33 +76,36 @@ with open('books.csv', 'r') as csv_f:
     for line in csv_reader:
         books.append(Book(line['TITLE'], line['AUTHOR'], line['YEAR']))
     Lib = Library(books)
-    print('Livros Cadastrados!')
+    print('Livros Cadastrados')
 
 attr = []
 rev = []
+error_config = False
 with open('ordena_bib.config', 'r') as f:
     for line in f:
-        if (line[0] == '1') or (line[0] == '2') or (line[0] == '3') or (line[0] == '4'):
+        if (line[0] == '1') or (line[0] == '2') or (line[0] == '3'):
             try:
                 num, attribute, reverse = line.split(',')
                 attr.append(attribute.strip())
-                rev.append(reverse.strip() == 'True')
+                rev.append(reverse.strip() == 'desc')
             except ValueError:
-                pass
+                error_config = True
+    print('Configurações lidas')
 
+error_sort = True
+if not error_config:
+    error_sort = Lib.sort_Lib(attr, rev)
 
-print(Lib)
-
-error_sort = Lib.sort_Lib(attr, rev)
 with open('book_sorted.csv', 'w') as csv_f:
-    csv_writer = csv.writer(csv_f)
+    csv_writer = csv.writer(csv_f, lineterminator='\n')
     csv_writer.writerow(['NUMBER', 'TITLE', 'AUTHOR', 'YEAR'])
-    if error_sort == True:
+    if not error_sort:
         for book in Lib.books:
             csv_writer.writerow(
-                f'{book.number}{book.title}{book.author}{book.year}')
-    elif error_sort == True:
-        pass
-
-print('Sorted Lib')
-print(Lib)
+                [book.number, book.title, book.author, book.year])
+        print('Ordenação realizada com sucesso, verifique arquivo')
+    elif error_config:
+        print('Order Exception')
+        csv_writer.writerow(['Order Exception'])
+    else:
+        print('Nenhuma ordenação realizada')
