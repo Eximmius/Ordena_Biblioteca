@@ -1,0 +1,38 @@
+Projeto do Serviço de Ordenação:
+    Apesar do programador ter muito mais prática em linguagem de baixo nível, o código
+        foi elaborado em Python pois ela minimiza o esforço do programador e 
+        tem boa legibilidade.
+    Código - Programação Orientada a Objetos:
+        Classe Livro - Atributos: Número (automático ao instanciar), Título, Autor, Edição/Ano
+        Classe Biblioteca - Permite o cadastro de livros através de uma lista.
+            Permite a ordenação dos livros conforme uma lista atributos preferenciais.
+                Para ordenação da lista, optou-se pela função 'built-in' do Python sort(), que é
+                estável, dessa maneira é possível realizar uma ordenação com atributo secundário
+                e realizar uma segunda ordenação com atributo mais preferencial sem que a ordem 
+                atributo secundário seja afetada.
+                Se houver um erro na ordenação, uma exceção é captada e uma flag é retornada pelo
+                método da classe.
+
+        Para facilitar o desenvolvimento do projeto, usou-se função __repr__ para possibilitar
+            uma boa representação do livro e da biblioteca.
+
+    Código - Execução:
+        1. Leitura de arquivo com modulo csv com atributos dos livros.
+        2. Leitura de arquivo com as configurações de ordenação.
+            Detecção de char para obter os atributos para ordenação
+            Se detectar o char correto, mas o argumentos forem incompletos, uma exceção é captada
+                e tratada para OrderException
+        3. Se não houer erro na leitura da configuração, a função sort_Lib() é chamada
+        4. Escrita em arquivo csv:
+            Se não houve erro no sort_Lib(), os livros em ordem são escritos no arquivo.
+            Se houve erro de leitura de configurações, OrderException é escrito no arquivo
+                (Order OrderException)
+            Se não houve nenhuma configuração, nenhum livro é escrito no arquivo (Vazio)
+
+        Todas as operações em arquivo foram usadas com o gerenciador de arquivos do Python
+            (with open)
+        Durante todas as etapas da execução uma mensagem é colocada no console de debug,
+            em caso de sucesso.
+
+    Caso NULL - Considerado se houver um entrada inválida na configurações
+    Caso Vazio - Considerado se não houver nenhuma entrada
