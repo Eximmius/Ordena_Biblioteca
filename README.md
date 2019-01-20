@@ -9,5 +9,5 @@ a) Com editor de texto, configure o arquivo ordena_bib.config conforme exemplos 
 
 b) Com interpretador Python, execute o arquivo ordena_bib.py (os arquivos books.csv e ordena_bib.config devem estar na mesma pasta)
 
-c) Verifique o arquivo gerado books_sorte.csv
+c) Verifique o arquivo gerado books_sorted.csv
   
